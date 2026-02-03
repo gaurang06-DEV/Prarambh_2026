@@ -1,6 +1,7 @@
 /* ===================================
    PRARAMBH 2026 - ROYAL GOAN ODYSSEY
    Complete Production-Ready Styling
+   REFINED VERSION - Click-Triggered UX
    =================================== */
 
 /* === FONT IMPORTS === */
@@ -333,7 +334,7 @@ body {
 }
 
 /* =====================================
-   EVENT CARDS - UNIFIED HOVER EFFECT
+   EVENT CARDS - CLICK-TRIGGERED SYSTEM
    ===================================== */
 .events {
     padding: 8rem 5%;
@@ -466,21 +467,61 @@ body {
     letter-spacing: 1px;
 }
 
-/* BACK FACE - Glassmorphism Overlay */
+/* BACK FACE - Glassmorphism Overlay (CLICK-TRIGGERED) */
 .event-back {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
     height: 0;
-    background: rgba(0, 26, 51, 0.85);
+    background: rgba(0, 26, 51, 0.90);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     border: 1px solid rgba(212, 175, 55, 0.2);
     padding: 2rem;
     overflow-y: auto;
-    transition: height 1s cubic-bezier(0.19, 1, 0.22, 1);
-    z-index: 3;
+    transition: var(--transition-luxury);
+    z-index: 10;
+    opacity: 0;
+}
+
+/* CLICK-TRIGGERED: Active State for 75% Coverage */
+.event-card.active-details .event-back {
+    height: 75%;
+    opacity: 1;
+}
+
+/* Close Button for Toggle Mechanism */
+.event-close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 32px;
+    height: 32px;
+    background: var(--metallic-gold);
+    color: var(--ocean-dark);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-smooth);
+    z-index: 15;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.event-card.active-details .event-close-btn {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.event-close-btn:hover {
+    background: var(--gold-light);
+    transform: rotate(90deg);
 }
 
 .event-back h4 {
@@ -554,17 +595,13 @@ body {
     font-weight: 600;
 }
 
-/* HOVER EFFECTS - UNIFIED FOR EVENT CARDS */
-.event-card:hover .event-image img {
-    transform: scale(1.1);
-    filter: brightness(0.6);
+/* CLICK-TRIGGERED: Image scales on active state */
+.event-card.active-details .event-image img {
+    transform: scale(1.05);
+    filter: brightness(0.4);
 }
 
-.event-card:hover .event-back {
-    height: 100%;
-}
-
-/* Animated Gold Border Frame */
+/* Animated Gold Border Frame (remains on hover for visual feedback) */
 .event-card::before {
     content: '';
     position: absolute;
@@ -630,7 +667,7 @@ body {
 }
 
 /* =====================================
-   TEAM SECTION - UNIFIED CARD EFFECT
+   TEAM SECTION - CLICK-TRIGGERED SYSTEM
    ===================================== */
 .team {
     padding: 8rem 5%;
@@ -717,7 +754,7 @@ body {
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
 }
 
-/* Glassmorphism Overlay (hidden by default) */
+/* Glassmorphism Overlay (CLICK-TRIGGERED) */
 .team-member::after {
     content: '';
     position: absolute;
@@ -729,31 +766,31 @@ body {
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     border: 1px solid rgba(212, 175, 55, 0.2);
-    transition: height 1s cubic-bezier(0.19, 1, 0.22, 1);
+    transition: var(--transition-luxury);
     z-index: 1;
 }
 
-/* HOVER EFFECTS - UNIFIED WITH EVENT CARDS */
-.team-member:hover img {
-    transform: scale(1.1);
-    filter: brightness(0.6);
+/* CLICK-TRIGGERED: Active State for 75% Coverage */
+.team-member.active-details::after {
+    height: 75%;
 }
 
-.team-member:hover::after {
-    height: 100%;
+.team-member.active-details img {
+    transform: scale(1.05);
+    filter: brightness(0.4);
 }
 
-.team-member:hover h4 {
-    bottom: 50%;
-    transform: translateY(20px);
+.team-member.active-details h4 {
+    bottom: 45%;
+    transform: translateY(0);
 }
 
-.team-member:hover p {
-    bottom: 50%;
-    transform: translateY(50px);
+.team-member.active-details p {
+    bottom: 35%;
+    transform: translateY(0);
 }
 
-/* Animated Gold Border Frame */
+/* Animated Gold Border Frame (remains on hover for visual feedback) */
 .team-member::before {
     content: '';
     position: absolute;
@@ -1081,6 +1118,18 @@ body {
 }
 
 @media (max-width: 768px) {
+    /* MOBILE PERFORMANCE OPTIMIZATION: Disable Neon-Glitch */
+    .event-title h1,
+    .year {
+        animation: none !important;
+        text-shadow: 0 0 10px var(--metallic-gold) !important;
+    }
+    
+    /* MOBILE PERFORMANCE: Disable parallax effect */
+    .home-text.parallax {
+        transform: none !important;
+    }
+    
     .event-title h1 {
         font-size: 3.5rem;
         letter-spacing: 6px;
